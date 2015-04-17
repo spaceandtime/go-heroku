@@ -6,10 +6,13 @@ import (
 	"fmt"
 )
 
+func hello(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Hello, world!"))
+}
+
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	creq, err := http.ReadRequest(bufio.NewReader(r.Body))
 	if err != nil {
-		s.HTTPError("ReadRequest: %s", err.Error())
 		return
 	}
 	client := &http.Client{}
@@ -26,7 +29,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
-	http.HandleFunc("/", proxyHandler)
+	http.HandleFunc("/", hello)
+	http.HandleFunc("/http", proxyHandler)
 	http.ListenAndServe("127.0.0.1:8080", nil)
 }

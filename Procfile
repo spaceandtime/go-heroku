@@ -1,1 +1,1 @@
-web: go-heroku
+web: goes-heroku -port:8080
