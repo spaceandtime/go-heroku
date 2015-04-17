@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"net/http"
 	"fmt"
+	"os"
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
@@ -31,5 +32,5 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", hello)
 	http.HandleFunc("/http", proxyHandler)
-	http.ListenAndServe("127.0.0.1:8080", nil)
+	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
